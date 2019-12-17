@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import numpy as np
+from PIL import Image,ImageTk
+import tkinter as tk
 
 # Useful classes : Game_state, Piece
 
@@ -112,6 +114,13 @@ class Piece:
     def y(self, new_y):
         self._y = new_y
         self._pos = (self._x, new_y)
+        
+    def draw(self,can,x,y): 
+        #Need to make a "pieces" file with all the pieces' sprites for it to work
+        self.nomImage = "pieces\\shogi_" + self.name[0].lower() + self.side[0] + ".png" 
+        self.image = Image.open(self.nomImage)
+        self.photo = ImageTk.PhotoImage(self.image, master = can)
+        can.create_image(x + 2,y + 2,anchor = tk.NW, image= self.photo)
     
     def __str__(self):
         if self.pos == None:
