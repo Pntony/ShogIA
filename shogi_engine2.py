@@ -2,6 +2,9 @@
 
 import numpy as np
 import copy
+import tkinter as tk
+from PIL import Image,ImageTk
+
 ###
 import time
 ###
@@ -148,6 +151,14 @@ class Piece:
     @promotion.setter
     def promotion(self, new_prom):
         self._promotion = new_prom
+        
+    def draw(self,can,x,y): #To draw the piece on the board
+        self.nomImage = "pieces\\shogi_" + self.name[0].lower() + self.side[0] + self.promotion + ".png" 
+        self.image = Image.open(self.nomImage)
+        if self.captured:
+            self.image = self.image.resize((25, 25), Image.ANTIALIAS)
+        self.photo = ImageTk.PhotoImage(self.image, master = can)
+        can.create_image(x + 2,y + 2,anchor = tk.NW, image= self.photo)
     
     def __str__(self):
         if self.pos == None:
